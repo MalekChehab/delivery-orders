@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   initSocket() {
-    socket = IO.io('https:127.0.0.1:3000', <String, dynamic>{
+    socket = IO.io('https://deliveryorders.onrender.com/', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
     });
@@ -48,6 +48,11 @@ class _MyHomePageState extends State<MyHomePage> {
     socket.on('orders', (data) {
       setState(() {
         orders = data;
+      });
+    });
+    socket.on('orderAdded', (data) {
+      setState(() {
+        orders.add(data);
       });
     });
     socket.onDisconnect((_) => print('Connection Disconnection'));
